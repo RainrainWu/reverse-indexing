@@ -16,9 +16,11 @@ class Tokenizer:
             self.stream = self.digest.split(" ")
         except AttributeError:
             print("digest {DIGEST} are not tokenizable!".format(DIGEST=self.digest))
+        return self
 
     def tokenize_by_comma(self):
         try:
             self.stream = self.digest.split(",")
         except AttributeError:
             print("digest {DIGEST} are not tokenizable!".format(DIGEST=self.digest))
+        return self
