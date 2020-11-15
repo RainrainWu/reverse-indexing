@@ -1,10 +1,8 @@
 class Tokenizer:
 
-    digest = None
-    stream = None
-
     def __init__(self):
-        pass
+        self.digest = None
+        self.stream = None
 
     def load(self, text):
         self.digest = text
