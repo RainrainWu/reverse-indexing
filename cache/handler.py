@@ -24,4 +24,4 @@ class CacheHandler:
         pipe = self.file_conn.pipeline()
         for f in files:
             pipe.get(f)
-        return pipe.execute()
+        return [x.decode("utf-8") for x in pipe.execute()]
