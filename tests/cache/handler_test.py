@@ -7,6 +7,9 @@ def test_apply_and_search():
 
     files = ["file one", "file two", "file three"]
     cache_handler = CacheHandler()
+    cache_handler.index_conn.flushdb()
+    cache_handler.file_conn.flushdb()
+
     cache_handler.apply(files[0], files[0].split(" "))
     cache_handler.apply(files[1], files[1].split(" "))
     cache_handler.apply(files[2], files[2].split(" "))
