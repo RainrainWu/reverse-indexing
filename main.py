@@ -26,7 +26,6 @@ def files():
 
     elif request.method == "POST":
         payload = request.json
-        print(payload)
         tokens = file_tokenizer.load(payload["file"]).tokenize_by_blank().extract()
         tokens = stream_filter.load(tokens).filter_ascii().extract()
         cache_handler.apply(payload["file"], tokens)
