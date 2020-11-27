@@ -4,6 +4,7 @@ from flask import Flask, request
 
 from analyzer.tokenizer import Tokenizer
 from analyzer.filter import Filter
+from analyzer.rater import Rater
 from cache.handler import CacheHandler
 from api.response import build_status, build_hateoas
 
@@ -11,6 +12,7 @@ app = Flask(__name__)
 
 file_tokenizer = Tokenizer()
 stream_filter = Filter()
+candidate_rater = Rater()
 cache_handler = CacheHandler()
 
 
@@ -19,7 +21,9 @@ def files():
 
     if request.method == "GET":
         payload = request.json
-        result = cache_handler.search(payload["token"])
+        candidates = cache_handler.search(payload["token"])
+        select = candidate_rater.load(payload["token"], candidates).limit_by_density(1).extract()
+        result = cache_handler.fetch_files(select)
         status = build_status(200, "search complete")
         response = build_hateoas(None, status, result, None)
         return json.dumps(response, indent=4)
